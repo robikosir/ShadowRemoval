@@ -40,13 +40,13 @@ public class ImageProcessing {
                 finalGreen = c.getGreen();
                 finalBlue = c.getBlue();
 
-                if (Math.abs(gradChannel[x][y].getLengthRed()) > 700 && Math.abs(gradInvariant[x][y].getLengthRed()) < 50) {
+                if (Math.abs(gradChannel[x][y].getLengthRed()) > 30 && Math.abs(gradInvariant[x][y].getLengthRed()) < 7) {
                     finalRed = 0;
                 }
-                if (Math.abs(gradChannel[x][y].getLengthGreen()) > 700 && Math.abs(gradInvariant[x][y].getLengthRed()) < 50) {
+                if (Math.abs(gradChannel[x][y].getLengthGreen()) > 30 && Math.abs(gradInvariant[x][y].getLengthRed()) < 7) {
                     finalGreen = 0;
                 }
-                if (Math.abs(gradChannel[x][y].getLengthBlue()) > 700 && Math.abs(gradInvariant[x][y].getLengthRed()) < 50) {
+                if (Math.abs(gradChannel[x][y].getLengthBlue()) > 30 && Math.abs(gradInvariant[x][y].getLengthRed()) < 7) {
                     finalBlue = 0;
                 }
 
