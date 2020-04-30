@@ -25,7 +25,7 @@ public class ImageProcessing {
     private BufferedImage removeShadow(BufferedImage image) {
         InvariantImage invariantImage = new InvariantImage(deepCopy(image));
 
-        Gradient originalPhotoGrad = new Gradient(image);
+        Gradient originalPhotoGrad = new Gradient(deepCopy(image));
         Gradient invariantImageGrad = new Gradient(invariantImage.getInvariantImage());
 
         int finalRed = 0, finalGreen = 0, finalBlue = 0;

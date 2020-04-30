@@ -43,6 +43,7 @@ public class Gradient {
                 gradSumYBlue = getChangeY(pixelArray, x, y, 'b');
 
                 gradArray[x][y] = new GradVector(new GradColor(gradSumXRed, gradSumXGreen, gradSumXBlue), new GradColor(gradSumYRed, gradSumYGreen, gradSumYBlue));
+                image.setRGB(x,y, new Color(gradArray[x][y].getLengthRed(), gradArray[x][y].getLengthGreen(), gradArray[x][y].getLengthBlue()).getRGB());
             }
         }
     }
@@ -123,5 +124,9 @@ public class Gradient {
 
     public GradVector[][] getGradArray() {
         return gradArray;
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
 }
