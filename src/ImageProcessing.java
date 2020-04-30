@@ -29,8 +29,8 @@ public class ImageProcessing {
         Gradient invariantImageGrad = new Gradient(invariantImage.getInvariantImage());
 
         int finalRed = 0, finalGreen = 0, finalBlue = 0;
-        GradColor[][] gradChannel = originalPhotoGrad.getGradArray();
-        GradColor[][] gradInvariant = invariantImageGrad.getGradArray();
+        GradVector[][] gradChannel = originalPhotoGrad.getGradArray();
+        GradVector[][] gradInvariant = invariantImageGrad.getGradArray();
 
         //check for channel gradient and invariatnImage gradient
         for (int x = 0; x < width; ++x) {
@@ -40,14 +40,13 @@ public class ImageProcessing {
                 finalGreen = c.getGreen();
                 finalBlue = c.getBlue();
 
-
-                if (Math.abs(gradChannel[x][y].getRed()) > 30 && Math.abs(gradInvariant[x][y].getRed()) < 10) {
+                if (Math.abs(gradChannel[x][y].getLengthRed()) > 700 && Math.abs(gradInvariant[x][y].getLengthRed()) < 50) {
                     finalRed = 0;
                 }
-                if (Math.abs(gradChannel[x][y].getGreen()) > 30 && Math.abs(gradInvariant[x][y].getRed()) < 10) {
+                if (Math.abs(gradChannel[x][y].getLengthGreen()) > 700 && Math.abs(gradInvariant[x][y].getLengthRed()) < 50) {
                     finalGreen = 0;
                 }
-                if (Math.abs(gradChannel[x][y].getBlue()) > 30 && Math.abs(gradInvariant[x][y].getRed()) < 5) {
+                if (Math.abs(gradChannel[x][y].getLengthBlue()) > 700 && Math.abs(gradInvariant[x][y].getLengthRed()) < 50) {
                     finalBlue = 0;
                 }
 

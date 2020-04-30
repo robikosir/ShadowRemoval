@@ -4,14 +4,14 @@ import java.awt.image.BufferedImage;
 public class Gradient {
     private final int width, height;
     private Color[][] pixelArray;
-    private GradColor[][] gradArray;
+    private GradVector[][] gradArray;
     private BufferedImage image;
     public Gradient(BufferedImage image) {
         this.image = image;
         width = image.getWidth();
         height = image.getHeight();
         pixelArray = new Color[width][height];
-        gradArray = new GradColor[width][height];
+        gradArray = new GradVector[width][height];
 
         constructImage();
         constructGradientArray();
@@ -38,7 +38,11 @@ public class Gradient {
                 gradSumXGreen = getChangeX(pixelArray, x, y, 'g');
                 gradSumXBlue = getChangeX(pixelArray, x, y, 'b');
 
-                gradArray[x][y] = new GradColor(gradSumXRed, gradSumXGreen, gradSumXBlue);
+                gradSumYRed = getChangeY(pixelArray, x, y, 'r');
+                gradSumYGreen = getChangeY(pixelArray, x, y, 'g');
+                gradSumYBlue = getChangeY(pixelArray, x, y, 'b');
+
+                gradArray[x][y] = new GradVector(new GradColor(gradSumXRed, gradSumXGreen, gradSumXBlue), new GradColor(gradSumYRed, gradSumYGreen, gradSumYBlue));
             }
         }
     }
@@ -117,7 +121,7 @@ public class Gradient {
         }
     }
 
-    public GradColor[][] getGradArray() {
+    public GradVector[][] getGradArray() {
         return gradArray;
     }
 }
