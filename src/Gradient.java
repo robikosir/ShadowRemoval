@@ -39,27 +39,11 @@ public class Gradient {
                 gradSumXBlue = getChangeX(pixelArray, x, y, 'b');
 
                 gradArray[x][y] = new GradColor(gradSumXRed, gradSumXGreen, gradSumXBlue);
-//                finalRed = pixelArray[x][y].getRed();
-//                finalGreen = pixelArray[x][y].getGreen();
-//                finalBlue = pixelArray[x][y].getBlue();
-//
-//                if (Math.abs(gradSumXRed) > 45) {
-//                    finalRed = 0;
-//                }
-//                if (Math.abs(gradSumXGreen) > 45) {
-//                    finalGreen = 0;
-//                }
-//
-//                if (Math.abs(gradSumXBlue) > 45) {
-//                    finalBlue = 0;
-//                }
-//
-//                this.image.setRGB(x,y, new Color(finalRed, finalGreen, finalBlue).getRGB());
             }
         }
     }
 
-    private int getChangeX(Color[][] pixelArray, int x, int y, char type) {
+    private int getChangeY(Color[][] pixelArray, int x, int y, char type) {
         if (y == 0) {
             switch (type) {
                 case 'r':
@@ -96,7 +80,7 @@ public class Gradient {
         }
     }
 
-    private int getChangeY(Color[][] pixelArray, int x, int y, char type) {
+    private int getChangeX(Color[][] pixelArray, int x, int y, char type) {
         if (x == 0) {
             switch (type) {
                 case 'r':
@@ -108,7 +92,7 @@ public class Gradient {
                 default:
                     return 0;
             }
-        } else if (x == height - 1) {
+        } else if (x == width - 1) {
             switch (type) {
                 case 'r':
                     return pixelArray[x][y].getRed() - pixelArray[x - 1][y].getRed();

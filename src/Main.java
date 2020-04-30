@@ -9,6 +9,6 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        ImageProcessing imageProcessing = new ImageProcessing("webimage.jpg");
+        ImageProcessing imageProcessing = new ImageProcessing("webimage2.jpg");
     }
 }

@@ -47,7 +47,7 @@ public class ImageProcessing {
                 if (Math.abs(gradChannel[x][y].getGreen()) > 30 && Math.abs(gradInvariant[x][y].getRed()) < 10) {
                     finalGreen = 0;
                 }
-                if (Math.abs(gradChannel[x][y].getBlue()) > 30 && Math.abs(gradInvariant[x][y].getRed()) < 10) {
+                if (Math.abs(gradChannel[x][y].getBlue()) > 30 && Math.abs(gradInvariant[x][y].getRed()) < 5) {
                     finalBlue = 0;
                 }
 
