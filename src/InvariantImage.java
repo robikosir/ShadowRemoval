@@ -39,10 +39,10 @@ public class InvariantImage {
                 float ch_r = (float) Math.log(R / pm);
                 float ch_b = (float) Math.log(B / pm);
 
-                float rad = (float) (Math.PI * (65.4889 - 1) / 180);
+                float alpha = 0.7f;
 
 
-                float grayImg = (float) (ch_r * Math.cos(rad) + ch_b * Math.sin(rad));
+                float grayImg = (float) (ch_r * Math.cos(alpha) + ch_b * Math.sin(alpha));
                 if (grayImg < min) {
                     min = grayImg;
                 }

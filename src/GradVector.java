@@ -16,12 +16,21 @@ public class GradVector {
     }
 
     public int getLengthRed() {
-        return (int) Math.sqrt(Math.pow(x.getRed(),2) + Math.pow(y.getRed(),2));
+        return returnBetweenRGBValue((int) Math.sqrt(Math.pow(x.getRed(),2) + Math.pow(y.getRed(),2)));
     }
     public int getLengthGreen() {
-        return (int) Math.sqrt(Math.pow(x.getGreen(),2) + Math.pow(y.getGreen(),2));
+        return returnBetweenRGBValue((int) Math.sqrt(Math.pow(x.getGreen(),2) + Math.pow(y.getGreen(),2)));
     }
     public int getLengthBlue() {
-        return (int) Math.sqrt(Math.pow(x.getBlue(),2) + Math.pow(y.getBlue(),2));
+        return returnBetweenRGBValue((int) Math.sqrt(Math.pow(x.getBlue(),2) + Math.pow(y.getBlue(),2)));
+    }
+
+    private int returnBetweenRGBValue(int value) {
+        if (value > 255) {
+            return 255;
+        } else if (value < 0) {
+            return 0;
+        }
+        return value;
     }
 }
