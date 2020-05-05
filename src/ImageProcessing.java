@@ -23,6 +23,7 @@ public class ImageProcessing {
     }
 
     private BufferedImage removeShadow(BufferedImage image) {
+        BufferedImage bmOut = new BufferedImage(width, height, image.getType());
         InvariantImage invariantImage = new InvariantImage(deepCopy(image));
 
         Gradient originalPhotoGrad = new Gradient(deepCopy(image));
@@ -33,28 +34,31 @@ public class ImageProcessing {
         GradVector[][] gradInvariant = invariantImageGrad.getGradArray();
 
         //check for channel gradient and invariatnImage gradient
-        for (int x = 0; x < width; ++x) {
-            for (int y = 0; y < height; ++y) {
+        for (int x = 1; x < width-1; ++x) {
+            for (int y = 1; y < height-1; ++y) {
                 Color c = new Color(image.getRGB(x,y));
-                finalRed = c.getRed();
-                finalGreen = c.getGreen();
-                finalBlue = c.getBlue();
+                finalRed = originalPhotoGrad.getGradArray()[x][y].getLengthRed();
+                finalGreen = originalPhotoGrad.getGradArray()[x][y].getLengthGreen();
+                finalBlue = originalPhotoGrad.getGradArray()[x][y].getLengthBlue();
 
-                if (Math.abs(gradChannel[x][y].getLengthRed()) > 30 && Math.abs(gradInvariant[x][y].getLengthRed()) < 7) {
+                int gradChannelLimit = 30;
+                int gradInvarientLimit = 5;
+
+                if (Math.abs(gradChannel[x][y].getLengthRed()) > gradChannelLimit && Math.abs(gradInvariant[x][y].getLengthRed()) < gradInvarientLimit) {
                     finalRed = 0;
                 }
-                if (Math.abs(gradChannel[x][y].getLengthGreen()) > 30 && Math.abs(gradInvariant[x][y].getLengthRed()) < 7) {
+                if (Math.abs(gradChannel[x][y].getLengthGreen()) > gradChannelLimit && Math.abs(gradInvariant[x][y].getLengthRed()) < gradInvarientLimit) {
                     finalGreen = 0;
                 }
-                if (Math.abs(gradChannel[x][y].getLengthBlue()) > 30 && Math.abs(gradInvariant[x][y].getLengthRed()) < 7) {
+                if (Math.abs(gradChannel[x][y].getLengthBlue()) > gradChannelLimit && Math.abs(gradInvariant[x][y].getLengthRed()) < gradInvarientLimit) {
                     finalBlue = 0;
                 }
 
-                image.setRGB(x,y, new Color(finalRed, finalGreen, finalBlue).getRGB());
+                bmOut.setRGB(x,y, new Color(finalRed, finalGreen, finalBlue).getRGB());
             }
         }
         try {
-            ImageIO.write(image, "jpg", new File("gradient.jpg"));
+            ImageIO.write(bmOut, "jpg", new File("gradient.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
