@@ -129,30 +129,7 @@ function laplacOfChannel = matrixSolving(fun, width, height)
      functionF = fun(:);
      laplacOfChannel = A \ functionF;
      laplacOfChannel = reshape (laplacOfChannel, ny, []);
-end
-
-    function processedResult = laplacian(inputImage, direction)
-%         inputImage = conv2(inputImage,[0,0,0;0,1,0;0,0,0]);
-%         inputImage = [inputImage(:,end) inputImage inputImage(:,1)]; 
-%         inputImage = [inputImage(end,:); inputImage; inputImage(1,:)]; 
-        N   = size(inputImage);
-        % do (de-)convolution in Fourier domain: 
-        FT_original = fftn(inputImage); 
-        % create forward Laplacian filter: 
-        [lap_x,lap_y] = meshgrid(...
-            2 - 2*cos(2*pi*(0:N(2)-1)/N(2)),...
-            2 - 2*cos(2*pi*(0:N(1)-1)/N(1)));
-        if direction == 1
-            LapFilter = lap_x + lap_y;
-        else
-            LapFilter = 1./(lap_x + lap_y);
-            LapFilter(1,1) = 0;
-        end
-        % (de)convolve in Fourier domain: 
-        FT_output = FT_original.*LapFilter;
-        % go back to image domain: 
-        processedResult = real(ifftn(FT_output)); 
-    end
+     endgoi
     
     function output = findMeanOfMax(red,green,blue)
         %calculate top 1 percentile of every single channel
