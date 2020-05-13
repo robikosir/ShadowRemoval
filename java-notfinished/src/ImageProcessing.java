@@ -34,31 +34,8 @@ public class ImageProcessing {
         GradVector[][] gradInvariant = invariantImageGrad.getGradArray();
 
         //check for channel gradient and invariatnImage gradient
-        for (int x = 1; x < width-1; ++x) {
-            for (int y = 1; y < height-1; ++y) {
-                Color c = new Color(image.getRGB(x,y));
-                finalRed = originalPhotoGrad.getGradArray()[x][y].getLengthRed();
-                finalGreen = originalPhotoGrad.getGradArray()[x][y].getLengthGreen();
-                finalBlue = originalPhotoGrad.getGradArray()[x][y].getLengthBlue();
-
-                int gradChannelLimit = 30;
-                int gradInvarientLimit = 5;
-
-                if (Math.abs(gradChannel[x][y].getLengthRed()) > gradChannelLimit && Math.abs(gradInvariant[x][y].getLengthRed()) < gradInvarientLimit) {
-                    finalRed = 0;
-                }
-                if (Math.abs(gradChannel[x][y].getLengthGreen()) > gradChannelLimit && Math.abs(gradInvariant[x][y].getLengthRed()) < gradInvarientLimit) {
-                    finalGreen = 0;
-                }
-                if (Math.abs(gradChannel[x][y].getLengthBlue()) > gradChannelLimit && Math.abs(gradInvariant[x][y].getLengthRed()) < gradInvarientLimit) {
-                    finalBlue = 0;
-                }
-
-                bmOut.setRGB(x,y, new Color(finalRed, finalGreen, finalBlue).getRGB());
-            }
-        }
         try {
-            ImageIO.write(bmOut, "jpg", new File("gradient.jpg"));
+            ImageIO.write(invariantImage.getInvariantImage(), "jpg", new File("gradient.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }

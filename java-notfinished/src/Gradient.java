@@ -31,7 +31,6 @@ public class Gradient {
         int gradSumXRed, gradSumYRed;
         int gradSumXBlue, gradSumYBlue;
         int gradSumXGreen, gradSumYGreen;
-        int finalRed = 0, finalGreen = 0, finalBlue = 0;
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
                 gradSumXRed = getChangeX(pixelArray, x, y, 'r');
@@ -43,7 +42,7 @@ public class Gradient {
                 gradSumYBlue = getChangeY(pixelArray, x, y, 'b');
 
                 gradArray[x][y] = new GradVector(new GradColor(gradSumXRed, gradSumXGreen, gradSumXBlue), new GradColor(gradSumYRed, gradSumYGreen, gradSumYBlue));
-                image.setRGB(x,y, new Color(gradArray[x][y].getLengthRed(), gradArray[x][y].getLengthGreen(), gradArray[x][y].getLengthBlue()).getRGB());
+                image.setRGB(x,y, new Color(gradArray[x][y].getLengthGreen(), gradArray[x][y].getLengthGreen(), gradArray[x][y].getLengthGreen()).getRGB());
             }
         }
     }
