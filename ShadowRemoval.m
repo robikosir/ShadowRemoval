@@ -94,11 +94,11 @@ red = uint8(255 * mat2gray(r));
 green = uint8(255 * mat2gray(g));
 blue = uint8(255 * mat2gray(b));
 
-% %meanvalues mapped to 111?
-% [redMean, greenMean, blueMean] = findMeanOfMax(red,green,blue);
-% red(red>redMean) = 111;
-% green(green>greenMean) = 111;
-% blue(blue>blueMean) = 111;
+%meanvalues mapped to white
+[redMean, greenMean, blueMean] = findMeanOfMax(red,green,blue);
+red(red>redMean) = 255;
+green(green>greenMean) = 255;
+blue(blue>blueMean) = 255;
 
 %merge channels
 rgbImage = cat(3, red,green,blue);
