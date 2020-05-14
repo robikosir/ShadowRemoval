@@ -1,4 +1,4 @@
-image = imread('3.png');
+image = imread('river.jpg');
 
 img_R = double(image(:,:,1));
 img_G = double(image(:,:,2));
@@ -39,14 +39,10 @@ ch_r = log(img_R ./ geoM);
 ch_b = log(img_B ./ geoM);
 
 
-%rad_t = pi * (alpha-1) / 180;
-grayImg = ch_r * cos(0.8) + ch_b * sin(0.8);
-     
- tmp = grayImg;
- tmp = tmp - min(min(tmp));
- tmp = tmp / max(max(tmp));
- 
-[GxI,GyI] = imgradientxy(tmp);
+alpha = 0.7;
+grayImg = ch_r * cos(alpha) + ch_b * sin(alpha);
+      
+[GxI,GyI] = imgradientxy(grayImg);
 [gmagI,gdirI] = imgradient(GxI,GyI);
 %invariant image end
 
@@ -55,15 +51,16 @@ grayImg = ch_r * cos(0.8) + ch_b * sin(0.8);
 [height,width] = size(gmag);
 for x = 1 : height
   for y = 1 : width
-      if greenMagnitude(x,y) > 5 && gmagI(x,y) < 0.1
+      if greenMagnitude(x,y) > 0 && gmagI(x,y) < 0.18
            greenX(x,y) = 0;
            greenY(x,y) = 0;
+           greenMagnitude(x,y) = 0;
       end
-      if redMagnitude(x,y)> 5 && gmagI(x,y) < 0.1
+      if redMagnitude(x,y)> 0 && gmagI(x,y) < 0.18
            redX(x,y) = 0;
            redY(x,y) = 0;
       end
-      if blueMagnitude(x,y)> 5 && gmagI(x,y) < 0.1
+      if blueMagnitude(x,y)> 0 && gmagI(x,y) < 0.18
            blueX(x,y) = 0;
            blueY(x,y) = 0;
       end
@@ -83,6 +80,8 @@ greenYY = imfilter(greenY, [0 -1 0; 0 1 0; 0 0 0], 'replicate');
 laplacR = redXX + redYY;
 laplacG = greenXX + greenYY;
 laplacB = blueXX + blueYY;
+imshow(greenMagnitude,[]);
+
 
 
 %slove laplacian equation
@@ -98,8 +97,11 @@ blue = uint8(255 * mat2gray(b));
 %merge channels
 rgbImage = cat(3, red,green,blue);
 imshow(rgbImage,[]);
-imwrite(rgbImage, 'shadowFree.png');
-
+% imwrite(rgbImage, 'shadowFreeRiver.png')
+% 
+% findMeanOfMax(red,green,blue);
+% rgbImage = cat(3, red,green,blue);
+% imshow(rgbImage,[]);
 
 % red(red>meanValues(1)) = 111;
 % green(green>meanValues(2)) = 111;
@@ -129,7 +131,7 @@ function laplacOfChannel = matrixSolving(fun, width, height)
      functionF = fun(:);
      laplacOfChannel = A \ functionF;
      laplacOfChannel = reshape (laplacOfChannel, ny, []);
-     endgoi
+end
     
     function output = findMeanOfMax(red,green,blue)
         %calculate top 1 percentile of every single channel
