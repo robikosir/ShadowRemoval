@@ -27,7 +27,6 @@ blueMagnitude = gmag;
 
 %invariant image
 image = image + 1;
-[h, w, d] = size(image);
 
 img_R = img_R / 255;
 img_G = img_G / 255;
@@ -122,6 +121,7 @@ function laplacOfChannel = matrixSolving(fun, width, height)
          A((i-2)*(ny)+1:(i-2)*(ny) + (ny),(i-1)*(ny)+1:(i-1)*(ny) + (ny)) = a_off;
          A((i-1)*(ny)+1:(i-1)*(ny) + (ny),(i-2)*(ny)+1:(i-2)*(ny) + (ny)) = a_off;
      end
+     
      functionF = fun(:);
      laplacOfChannel = A \ functionF;
      laplacOfChannel = reshape (laplacOfChannel, ny, []);
