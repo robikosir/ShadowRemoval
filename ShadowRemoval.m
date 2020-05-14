@@ -1,4 +1,4 @@
-image = imread('river.jpg');
+image = imread('3.png');
 
 img_R = double(image(:,:,1));
 img_G = double(image(:,:,2));
@@ -51,16 +51,16 @@ grayImg = ch_r * cos(alpha) + ch_b * sin(alpha);
 [height,width] = size(gmag);
 for x = 1 : height
   for y = 1 : width
-      if greenMagnitude(x,y) > 0 && gmagI(x,y) < 0.18
+      if greenMagnitude(x,y) > 0 && gmagI(x,y) < 0.1
            greenX(x,y) = 0;
            greenY(x,y) = 0;
            greenMagnitude(x,y) = 0;
       end
-      if redMagnitude(x,y)> 0 && gmagI(x,y) < 0.18
+      if redMagnitude(x,y)> 0 && gmagI(x,y) < 0.1
            redX(x,y) = 0;
            redY(x,y) = 0;
       end
-      if blueMagnitude(x,y)> 0 && gmagI(x,y) < 0.18
+      if blueMagnitude(x,y)> 0 && gmagI(x,y) < 0.1
            blueX(x,y) = 0;
            blueY(x,y) = 0;
       end
@@ -94,21 +94,15 @@ red = uint8(255 * mat2gray(r));
 green = uint8(255 * mat2gray(g));
 blue = uint8(255 * mat2gray(b));
 
+% %meanvalues mapped to 111?
+% [redMean, greenMean, blueMean] = findMeanOfMax(red,green,blue);
+% red(red>redMean) = 111;
+% green(green>greenMean) = 111;
+% blue(blue>blueMean) = 111;
+
 %merge channels
 rgbImage = cat(3, red,green,blue);
 imshow(rgbImage,[]);
-% imwrite(rgbImage, 'shadowFreeRiver.png')
-% 
-% findMeanOfMax(red,green,blue);
-% rgbImage = cat(3, red,green,blue);
-% imshow(rgbImage,[]);
-
-% red(red>meanValues(1)) = 111;
-% green(green>meanValues(2)) = 111;
-% blue(blue>meanValues(3)) = 111;
-
- 
-% rgbImage = cat(3, red,green,blue);
 
 function laplacOfChannel = matrixSolving(fun, width, height)
     nx = width;
@@ -133,7 +127,7 @@ function laplacOfChannel = matrixSolving(fun, width, height)
      laplacOfChannel = reshape (laplacOfChannel, ny, []);
 end
     
-    function output = findMeanOfMax(red,green,blue)
+    function [redMean, greenMean, blueMean] = findMeanOfMax(red,green,blue)
         %calculate top 1 percentile of every single channel
         redTop = prctile(red,99,'all');
         greenTop = prctile(green,99,'all');
@@ -147,6 +141,4 @@ end
         redMean = mean(reshape(red(tresholdedRed),1,[]));
         blueMean = mean(reshape(green(tresholdedBlue),1,[]));
         greenMean = mean(reshape(blue(tresholdedGreen),1,[]));
-        
-        output = [redMean, greenMean, blueMean];
       end
